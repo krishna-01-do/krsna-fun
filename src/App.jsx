@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  ArrowLeft, ArrowRight, Check, Home, Menu,
-  Play, Sparkles, Volume2, VolumeX, X,
+  ArrowLeft, ArrowRight, Check, Globe2, Heart, Home, Menu,
+  MousePointer2, Play, Shuffle, Sparkles, Star, Volume2, VolumeX, X, Zap,
 } from 'lucide-react'
 import confetti from 'canvas-confetti'
 import LivingUniverse from './LivingUniverse'
@@ -141,6 +141,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [copied, setCopied] = useState(false)
   const [editing, setEditing] = useState(false)
+  const [chaosMode, setChaosMode] = useState(false)
   const topRef = useRef(null)
 
   const scrollTop = () => requestAnimationFrame(() => topRef.current?.scrollIntoView({ behavior: 'smooth' }))
@@ -217,6 +218,15 @@ function App() {
     setEditing(true)
     window.history.replaceState({}, '', window.location.pathname)
     scrollTop()
+  }
+
+  const toggleChaos = () => {
+    const next = !chaosMode
+    setChaosMode(next)
+    ping(next ? 760 : 320, .14, sound)
+    if (next) {
+      confetti({ particleCount: 75, spread: 95, origin: { y: .08 }, colors: ['#ffcf59', '#ff6e8a', '#7455e9', '#62d8b0'] })
+    }
   }
 
   useEffect(() => {
@@ -360,11 +370,12 @@ function App() {
   }
 
   return (
-    <div className={`app view-${view}`} ref={topRef}>
+    <div className={`app view-${view} ${chaosMode ? 'chaos-mode' : ''}`} ref={topRef}>
       <a className="skip-link" href="#main">Skip to the fun</a>
-      <Header view={view} onHome={goHome} onPlay={start} menuOpen={menuOpen} setMenuOpen={setMenuOpen} sound={sound} setSound={setSound} />
+      <FunCursor />
+      <Header view={view} onHome={goHome} onPlay={start} menuOpen={menuOpen} setMenuOpen={setMenuOpen} sound={sound} setSound={setSound} chaosMode={chaosMode} onChaos={toggleChaos} />
       <main id="main">
-        {view === 'home' && <HomePage onStart={start} onSurprise={surprise} />}
+        {view === 'home' && <HomePage onStart={start} onSurprise={surprise} chaosMode={chaosMode} onChaos={toggleChaos} />}
         {view === 'play' && (
           <PlanetBuilder
             step={step}
@@ -390,7 +401,7 @@ function App() {
   )
 }
 
-function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound }) {
+function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound, chaosMode, onChaos }) {
   return (
     <header className="site-header">
       <button className="logo" onClick={onHome} aria-label="KRSNA.FUN home">
@@ -403,6 +414,7 @@ function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound }
         <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
       </nav>
       <div className="header-actions">
+        <button className={`chaos-toggle ${chaosMode ? 'active' : ''}`} onClick={onChaos} aria-pressed={chaosMode}><Zap size={13} fill="currentColor" /> {chaosMode ? 'CHAOS ON' : 'ADD CHAOS'}</button>
         {view !== 'home' && <button className="sound-button" onClick={() => setSound(!sound)} aria-label={`${sound ? 'Mute' : 'Enable'} sounds`}>{sound ? <Volume2 /> : <VolumeX />}</button>}
         <button className="mini-play" onClick={onPlay}><Play size={14} fill="currentColor" /> Play</button>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">{menuOpen ? <X /> : <Menu />}</button>
@@ -411,7 +423,13 @@ function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound }
   )
 }
 
-function HomePage({ onStart, onSurprise }) {
+function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
+  const [toyMessage, setToyMessage] = useState('psst... poke me')
+  const pokeToy = () => {
+    const messages = ['rude. do it again.', 'hehe that tickles', 'you found a secret!', 'okay bestie 💅', 'certified button-poker', 'the blob remembers.']
+    setToyMessage(randomItem(messages))
+    confetti({ particleCount: 28, spread: 55, origin: { x: .11, y: .63 }, colors: ['#ffd95a', '#7455e9', '#f16d75'] })
+  }
   return (
     <>
       <section className="hero-section">
@@ -419,20 +437,32 @@ function HomePage({ onStart, onSurprise }) {
           <span className="doodle doodle-star">✦</span><span className="doodle doodle-smile">☺</span>
           <span className="doodle doodle-arrow">↝</span><span className="doodle doodle-orbit">🪐</span>
         </div>
-        <div className="eyebrow"><Sparkles size={15} /> THE INTERNET&apos;S PLAYGROUND <Sparkles size={15} /></div>
+        <div className="eyebrow"><span className="eyebrow-dot" /> THE INTERNET&apos;S PLAYGROUND <span className="eyebrow-new">NEW DROP</span></div>
         <h1><span>BORED?</span><br />GOOD.</h1>
-        <p>Welcome to your new favourite corner of the internet.<br className="desktop-break" /> Click something. Make something weird. Have fun.</p>
+        <p>Your screen time finally has a personality.<br className="desktop-break" /> Click something. Make something unhinged. Send it to the group chat.</p>
         <div className="hero-actions">
-          <button className="primary-button wobble" onClick={onSurprise}><Sparkles size={20} /> Surprise Me!</button>
+          <button className="primary-button wobble hero-main-cta" onClick={onSurprise}><Sparkles size={20} /> DROP ME SOMEWHERE WEIRD <span>↗</span></button>
           <button className="text-button" onClick={() => document.querySelector('#playground')?.scrollIntoView({ behavior: 'smooth' })}>See all the fun <ArrowRight size={18} /></button>
         </div>
-        <div className="hero-toy" aria-hidden="true">
+        <button className="hero-toy" onClick={pokeToy} aria-label="Poke the floating blob">
           <div className="toy-orbit orbit-one"><span>🍕</span></div>
           <div className="toy-orbit orbit-two"><span>✨</span></div>
           <div className="toy-face"><i></i><i></i><b></b></div>
-        </div>
+          <span className="toy-message">{toyMessage}</span>
+        </button>
+        <button className={`chaos-sticker ${chaosMode ? 'active' : ''}`} onClick={onChaos}>
+          <Zap fill="currentColor" /> {chaosMode ? 'MAXIMUM\nCHAOS!' : 'MAKE IT\nWEIRDER'}
+        </button>
+        <div className="hero-proof"><span><MousePointer2 /> NO LOGIN</span><span><Heart /> PURE SEROTONIN</span><span><Globe2 /> MADE FOR EVERYONE</span></div>
         <div className="scroll-note">SCROLL FOR FUN <span>↓</span></div>
       </section>
+
+      <div className="fun-marquee" aria-label="KRSNA.FUN highlights">
+        <div>
+          <span>MAKE WEIRD STUFF</span><i>✦</i><span>ZERO PRODUCTIVITY</span><i>☺</i><span>32,768 PLANETS</span><i>✦</i><span>BUILT FOR THE GROUP CHAT</span><i>↗</i>
+          <span>MAKE WEIRD STUFF</span><i>✦</i><span>ZERO PRODUCTIVITY</span><i>☺</i><span>32,768 PLANETS</span><i>✦</i><span>BUILT FOR THE GROUP CHAT</span><i>↗</i>
+        </div>
+      </div>
 
       <section className="playground-section" id="playground">
         <div className="section-heading">
@@ -469,6 +499,42 @@ function HomePage({ onStart, onSurprise }) {
         </div>
       </section>
 
+      <section className="vibe-section">
+        <div className="vibe-heading">
+          <span className="section-kicker">LOW EFFORT. HIGH REWARD.</span>
+          <h2>FUN THAT <em>ACTUALLY</em><br />FUNS.</h2>
+          <p>We removed the boring bits. No accounts, no tutorials, no “book a demo.” Just instant nonsense.</p>
+        </div>
+        <div className="vibe-grid">
+          <article className="vibe-card combo-card">
+            <span>THE POSSIBILITY MACHINE</span>
+            <strong>32,768</strong>
+            <h3>possible weird planets</h3>
+            <div className="combo-orbit"><i /><i /><i /><b>?</b></div>
+            <p>And somehow you&apos;ll still make the strangest one.</p>
+          </article>
+          <article className="vibe-card instant-card">
+            <span>TIME TO FUN</span>
+            <strong>0.2<small>SEC</small></strong>
+            <h3>faster than your attention span</h3>
+            <div className="speed-lines"><i /><i /><i /><i /></div>
+            <p>No onboarding. Your inner chaos gremlin already knows what to do.</p>
+          </article>
+          <article className="vibe-card share-card">
+            <span>GROUP CHAT ENERGY</span>
+            <div className="chat-stack"><i>what is this 😭</i><i>mine has a potato king</i><i>send the link rn</i></div>
+            <h3>made to be sent,<br />not scrolled past</h3>
+            <p>Every planet gets a shareable passport and its own permanent link.</p>
+          </article>
+        </div>
+        <div className="how-it-works">
+          <span>HOW TO KRSNA.FUN</span>
+          <div><b>01</b><i><MousePointer2 /></i><strong>Pick your chaos</strong><small>Five extremely important nonsense decisions.</small></div>
+          <div><b>02</b><i><Star /></i><strong>Discover a world</strong><small>Watch your choices become a living planet.</small></div>
+          <div><b>03</b><i><Shuffle /></i><strong>Explore & share</strong><small>Meet locals, cause disasters, confuse friends.</small></div>
+        </div>
+      </section>
+
       <section className="manifesto" id="about">
         <span className="big-asterisk">✻</span>
         <p>THE INTERNET NEEDED<br />MORE <em>FUN.</em></p>
@@ -492,10 +558,19 @@ function PlanetBuilder({ step, choices, onChoose, onBack }) {
           <div className="progress-track"><i style={{ width: `${((step + 1) / questions.length) * 100}%` }} /></div>
         </div>
       </div>
+      <div className="choice-journey" aria-label="Your planet choices">
+        {questions.map((item, index) => (
+          <div key={item.key} className={`${index === step ? 'current' : ''} ${choices[index] ? 'done' : ''}`}>
+            <span>{choices[index]?.emoji ?? index + 1}</span>
+            <small>{item.key}</small>
+          </div>
+        ))}
+      </div>
       <div className="question-heading" key={question.key}>
         <span>{question.kicker}</span>
         <h1>{question.title}</h1>
         <p>Pick the answer your heart says yes to. Your brain isn&apos;t invited.</p>
+        <button className="random-answer" onClick={() => onChoose(randomItem(question.options))}><Shuffle /> Pick for me, I&apos;m chaotic</button>
       </div>
       <div className="answer-grid" key={`${question.key}-answers`}>
         {question.options.map((option, i) => (
@@ -515,6 +590,35 @@ function PlanetBuilder({ step, choices, onChoose, onBack }) {
       <p className="builder-tip"><span>💡</span> There are no wrong answers. Only increasingly questionable planets.</p>
     </section>
   )
+}
+
+function FunCursor() {
+  const dot = useRef(null)
+  const ring = useRef(null)
+
+  useEffect(() => {
+    const move = (event) => {
+      dot.current?.style.setProperty('transform', `translate3d(${event.clientX}px, ${event.clientY}px, 0)`)
+      ring.current?.animate(
+        { transform: `translate3d(${event.clientX}px, ${event.clientY}px, 0)` },
+        { duration: 280, fill: 'forwards', easing: 'cubic-bezier(.2,.8,.2,1)' },
+      )
+      const hovering = Boolean(event.target.closest('button, a, [role="button"]'))
+      ring.current?.classList.toggle('is-hovering', hovering)
+    }
+    const down = () => ring.current?.classList.add('is-clicking')
+    const up = () => ring.current?.classList.remove('is-clicking')
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerdown', down)
+    window.addEventListener('pointerup', up)
+    return () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerdown', down)
+      window.removeEventListener('pointerup', up)
+    }
+  }, [])
+
+  return <div className="fun-cursor" aria-hidden="true"><i ref={dot} /><b ref={ring}>✦</b></div>
 }
 
 function Footer() {
