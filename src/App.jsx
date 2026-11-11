@@ -14,14 +14,14 @@ const questions = [
     kicker: 'THE SKY IS BEING WEIRD',
     title: "What's the weather like?",
     options: [
-      { emoji: '🍕', title: "It's raining pizza", desc: 'Mostly pepperoni, light crust after 6.', tone: '#ff7452' },
-      { emoji: '🍫', title: 'Chocolate thunderstorms', desc: 'Delicious. Slightly sticky. Very loud.', tone: '#8b5a3c' },
-      { emoji: '🌈', title: 'Rainbow snow', desc: 'Cold, colourful, tastes like Tuesdays.', tone: '#7357ff' },
-      { emoji: '🌅', title: 'Permanent sunset', desc: 'Golden hour. Every hour. Forever.', tone: '#f9789c' },
-      { emoji: '🐈', title: 'Cats & dogs', desc: 'Literally falling from the sky. Gently.', tone: '#42a5ef' },
-      { emoji: '🫧', title: 'Bubble tornadoes', desc: 'Very dramatic. Smells like strawberries.', tone: '#31bea8' },
-      { emoji: '✨', title: 'Glitter fog', desc: 'Visibility: zero. Fabulousness: maximum.', tone: '#e34ecb' },
-      { emoji: '🍜', title: 'Noodle monsoon', desc: 'Bring an umbrella and a very large fork.', tone: '#ef9e35' },
+      { emoji: '🍕', title: "It's raining pizza", desc: 'Mostly pepperoni, light crust after 6', tone: '#ff7452' },
+      { emoji: '🍫', title: 'Chocolate thunderstorms', desc: 'Delicious, slightly sticky and very loud', tone: '#8b5a3c' },
+      { emoji: '🌈', title: 'Rainbow snow', desc: 'Cold, colourful and tastes like Tuesdays', tone: '#7357ff' },
+      { emoji: '🌅', title: 'Permanent sunset', desc: 'Golden hour, every hour, forever', tone: '#f9789c' },
+      { emoji: '🐈', title: 'Cats & dogs', desc: 'Literally falling from the sky, gently', tone: '#42a5ef' },
+      { emoji: '🫧', title: 'Bubble tornadoes', desc: 'Very dramatic and smells like strawberries', tone: '#31bea8' },
+      { emoji: '✨', title: 'Glitter fog', desc: 'Visibility: zero, fabulousness: maximum', tone: '#e34ecb' },
+      { emoji: '🍜', title: 'Noodle monsoon', desc: 'Bring an umbrella and a very large fork', tone: '#ef9e35' },
     ],
   },
   {
@@ -29,14 +29,14 @@ const questions = [
     kicker: 'PHYSICS HAS LEFT THE CHAT',
     title: 'What happens to gravity?',
     options: [
-      { emoji: '🎈', title: 'Everyone floats', desc: 'Doorways are now merely suggestions.', tone: '#4b8cf7' },
-      { emoji: '➡️', title: 'Everything falls sideways', desc: 'The east side is getting crowded.', tone: '#f26965' },
-      { emoji: '🔄', title: 'Changes every 10 seconds', desc: 'Hold onto something. No, something else.', tone: '#714ee8' },
-      { emoji: '🍩', title: 'Only food has gravity', desc: 'Donuts are surprisingly dependable.', tone: '#ed6596' },
-      { emoji: '🏖️', title: 'Gravity is on vacation', desc: 'It left a note. Back eventually. Maybe.', tone: '#26ad98' },
-      { emoji: '🕺', title: 'Works only while dancing', desc: 'The moonwalk is now public transport.', tone: '#f18b2f' },
-      { emoji: '🧲', title: 'Attracted to silliness', desc: 'Bad jokes carry serious weight.', tone: '#e14954' },
-      { emoji: '⬆️', title: 'Up is the new down', desc: 'Ceilings are premium real estate.', tone: '#3e70d9' },
+      { emoji: '🎈', title: 'Everyone floats', desc: 'Doorways are now merely suggestions', tone: '#4b8cf7' },
+      { emoji: '➡️', title: 'Everything falls sideways', desc: 'The east side is getting crowded', tone: '#f26965' },
+      { emoji: '🔄', title: 'Changes every 10 seconds', desc: 'Hold onto something, no, something else', tone: '#714ee8' },
+      { emoji: '🍩', title: 'Only food has gravity', desc: 'Donuts are surprisingly dependable', tone: '#ed6596' },
+      { emoji: '🏖️', title: 'Gravity is on vacation', desc: 'It left a note and may be back eventually', tone: '#26ad98' },
+      { emoji: '🕺', title: 'Works only while dancing', desc: 'The moonwalk is now public transport', tone: '#f18b2f' },
+      { emoji: '🧲', title: 'Attracted to silliness', desc: 'Bad jokes carry serious weight', tone: '#e14954' },
+      { emoji: '⬆️', title: 'Up is the new down', desc: 'Ceilings are premium real estate', tone: '#3e70d9' },
     ],
   },
   {
@@ -44,14 +44,14 @@ const questions = [
     kicker: 'SOMEONE HAS TO BE IN CHARGE',
     title: 'Who runs this place?',
     options: [
-      { emoji: '🐸', title: 'Intelligent frogs', desc: 'They have tiny glasses and huge opinions.', tone: '#4cad61' },
-      { emoji: '🐈', title: 'A council of cats', desc: 'Meetings are mostly naps and judgement.', tone: '#f09d3a' },
-      { emoji: '🐧', title: 'One confused penguin', desc: 'Nobody elected him. Including him.', tone: '#397cca' },
-      { emoji: '👽', title: 'Dancing aliens', desc: 'All laws must have a four-on-the-floor beat.', tone: '#6b52db' },
-      { emoji: '🥔', title: 'A crowned potato', desc: 'Starchy, fair, beloved by the people.', tone: '#a76b3f' },
-      { emoji: '🦆', title: 'A loud duck', desc: 'Every speech is just QUACK, but inspiring.', tone: '#eab742' },
-      { emoji: '🤖', title: 'A polite toaster', desc: 'Firmly pro-breakfast. Anti-soggy bread.', tone: '#68778b' },
-      { emoji: '🐛', title: 'Three worms in a coat', desc: 'Surprisingly competent economic policy.', tone: '#dc6674' },
+      { emoji: '🐸', title: 'Intelligent frogs', desc: 'They have tiny glasses and huge opinions', tone: '#4cad61' },
+      { emoji: '🐈', title: 'A council of cats', desc: 'Meetings are mostly naps and judgement', tone: '#f09d3a' },
+      { emoji: '🐧', title: 'One confused penguin', desc: 'Nobody elected him, including him', tone: '#397cca' },
+      { emoji: '👽', title: 'Dancing aliens', desc: 'All laws must have a four-on-the-floor beat', tone: '#6b52db' },
+      { emoji: '🥔', title: 'A crowned potato', desc: 'Starchy, fair and beloved by the people', tone: '#a76b3f' },
+      { emoji: '🦆', title: 'A loud duck', desc: 'Every speech is just QUACK but inspiring', tone: '#eab742' },
+      { emoji: '🤖', title: 'A polite toaster', desc: 'Firmly pro-breakfast and anti-soggy bread', tone: '#68778b' },
+      { emoji: '🐛', title: 'Three worms in a coat', desc: 'Surprisingly competent economic policy', tone: '#dc6674' },
     ],
   },
   {
@@ -59,14 +59,14 @@ const questions = [
     kicker: 'IMPORTANT CIVILISATION STUFF',
     title: "What's the main food?",
     options: [
-      { emoji: '🍕', title: 'Unlimited pizza', desc: 'The crust is renewable energy.', tone: '#ee6550' },
-      { emoji: '🍫', title: 'Chocolate rivers', desc: 'Bridges exist, but nobody uses them.', tone: '#8e593c' },
-      { emoji: '🍔', title: 'Flying burgers', desc: 'Dinner migration season is beautiful.', tone: '#e49039' },
-      { emoji: '🍦', title: 'Ice cream trees', desc: 'Watch out for brain-freeze season.', tone: '#e96a9b' },
-      { emoji: '🍝', title: 'Spaghetti clouds', desc: 'Forecast: saucy with a chance of meatballs.', tone: '#dc5d45' },
-      { emoji: '🥞', title: 'Pancake mountains', desc: 'Maple syrup avalanches are a real concern.', tone: '#c98a39' },
-      { emoji: '🍿', title: 'Popcorn volcanoes', desc: 'Eruptions mean movie night.', tone: '#e2b33e' },
-      { emoji: '🥐', title: 'Moon croissants', desc: 'Flaky, mysterious, excellent with coffee.', tone: '#d89948' },
+      { emoji: '🍕', title: 'Unlimited pizza', desc: 'The crust is renewable energy', tone: '#ee6550' },
+      { emoji: '🍫', title: 'Chocolate rivers', desc: 'Bridges exist but nobody uses them', tone: '#8e593c' },
+      { emoji: '🍔', title: 'Flying burgers', desc: 'Dinner migration season is beautiful', tone: '#e49039' },
+      { emoji: '🍦', title: 'Ice cream trees', desc: 'Watch out for brain-freeze season', tone: '#e96a9b' },
+      { emoji: '🍝', title: 'Spaghetti clouds', desc: 'Forecast: saucy with a chance of meatballs', tone: '#dc5d45' },
+      { emoji: '🥞', title: 'Pancake mountains', desc: 'Maple syrup avalanches are a real concern', tone: '#c98a39' },
+      { emoji: '🍿', title: 'Popcorn volcanoes', desc: 'Eruptions mean movie night', tone: '#e2b33e' },
+      { emoji: '🥐', title: 'Moon croissants', desc: 'Flaky, mysterious and excellent with coffee', tone: '#d89948' },
     ],
   },
   {
@@ -74,40 +74,40 @@ const questions = [
     kicker: 'THE VERY SERIOUS RULEBOOK',
     title: "What's the biggest law?",
     options: [
-      { emoji: '🦀', title: 'No normal walking', desc: 'Skip, moonwalk or crab-walk. Choose wisely.', tone: '#e2514d' },
-      { emoji: '💃', title: 'Dance before speaking', desc: 'Courtrooms take absolutely forever.', tone: '#d94fa4' },
-      { emoji: '📅', title: 'Mondays are illegal', desc: 'Tuesday is nervous but staying quiet.', tone: '#5c78dd' },
-      { emoji: '😴', title: 'Naps are compulsory', desc: 'Productivity has never been cozier.', tone: '#8368d8' },
-      { emoji: '🤠', title: 'Silly hats at all times', desc: 'Top hats count double on tax day.', tone: '#c4773d' },
-      { emoji: '🤣', title: 'One bad joke daily', desc: 'Pun enforcement is extremely strict.', tone: '#e69b25' },
-      { emoji: '🧦', title: 'Mismatched socks only', desc: 'Matching pairs are immediately separated.', tone: '#3b9a9a' },
-      { emoji: '🎺', title: 'Entrances need fanfare', desc: 'Buying milk has become quite theatrical.', tone: '#db6240' },
+      { emoji: '🦀', title: 'No normal walking', desc: 'Skip, moonwalk or crab-walk, choose wisely', tone: '#e2514d' },
+      { emoji: '💃', title: 'Dance before speaking', desc: 'Courtrooms take absolutely forever', tone: '#d94fa4' },
+      { emoji: '📅', title: 'Mondays are illegal', desc: 'Tuesday is nervous but staying quiet', tone: '#5c78dd' },
+      { emoji: '😴', title: 'Naps are compulsory', desc: 'Productivity has never been cozier', tone: '#8368d8' },
+      { emoji: '🤠', title: 'Silly hats at all times', desc: 'Top hats count double on tax day', tone: '#c4773d' },
+      { emoji: '🤣', title: 'One bad joke daily', desc: 'Pun enforcement is extremely strict', tone: '#e69b25' },
+      { emoji: '🧦', title: 'Mismatched socks only', desc: 'Matching pairs are immediately separated', tone: '#3b9a9a' },
+      { emoji: '🎺', title: 'Entrances need fanfare', desc: 'Buying milk has become quite theatrical', tone: '#db6240' },
     ],
   },
 ]
 
 const activities = [
-  { title: "Build a Planet That Shouldn't Exist", desc: 'Five choices. One deeply questionable world.', icon: '🪐', className: 'planet-card', live: true },
-  { title: 'The Useless Button', desc: 'It does nothing. Until it does too much.', icon: '🔴', className: 'red-card' },
-  { title: 'What Does Your Name Look Like?', desc: 'Finally, your name gets a weird little face.', icon: '🫠', className: 'yellow-card' },
-  { title: 'The Tiny Life Simulator', desc: 'A whole tiny life. Questionable tiny choices.', icon: '🏡', className: 'green-card' },
-  { title: 'The Internet Time Machine', desc: 'Visit the web in years that never happened.', icon: '💾', className: 'blue-card' },
-  { title: 'What If...?', desc: 'Serious answers to deeply unserious questions.', icon: '💭', className: 'pink-card' },
-  { title: 'Random Superpower Machine', desc: 'Incredible powers. Almost zero usefulness.', icon: '⚡', className: 'purple-card' },
-  { title: 'Make a Weird Creature', desc: 'Nature had rules. You do not.', icon: '🦖', className: 'orange-card' },
+  { title: "Build a Planet That Shouldn't Exist", desc: 'Five choices and one deeply questionable world', icon: '🪐', className: 'planet-card', live: true },
+  { title: 'The Useless Button', desc: 'It does nothing until it does too much', icon: '🔴', className: 'red-card' },
+  { title: 'What Does Your Name Look Like?', desc: 'Finally your name gets a weird little face', icon: '🫠', className: 'yellow-card' },
+  { title: 'The Tiny Life Simulator', desc: 'A whole tiny life with questionable tiny choices', icon: '🏡', className: 'green-card' },
+  { title: 'The Internet Time Machine', desc: 'Visit the web in years that never happened', icon: '💾', className: 'blue-card' },
+  { title: 'What If?', desc: 'Serious answers to deeply unserious questions', icon: '💭', className: 'pink-card' },
+  { title: 'Random Superpower Machine', desc: 'Incredible powers with almost zero usefulness', icon: '⚡', className: 'purple-card' },
+  { title: 'Make a Weird Creature', desc: 'Nature had rules but you do not', icon: '🦖', className: 'orange-card' },
 ]
 
 const nameStarts = ['Pizz', 'Wobble', 'Zorp', 'Bongo', 'Fluff', 'Quirk', 'Noodle', 'Bonk', 'Gloop', 'Disco']
 const nameEnds = ['atron', 'opolis', 'onia', 'topia', 'aroo', 'ulon', 'berry', ' Prime', ' IX', '-9000']
 const funFacts = [
-  'Its national anthem is just one extremely long kazoo note.',
-  'The moon is legally classified as a snack.',
-  'Nobody knows where the spoons come from. They just appear.',
-  'The planet celebrates its birthday every Thursday.',
-  'All doors say “nice!” when opened.',
-  'Its scientists recently discovered the colour Thursday.',
-  'The local currency is compliments and shiny buttons.',
-  'There are no mosquitoes. This is its greatest achievement.',
+  'Its national anthem is just one extremely long kazoo note',
+  'The moon is legally classified as a snack',
+  'Nobody knows where the spoons come from, they just appear',
+  'The planet celebrates its birthday every Thursday',
+  'All doors say “nice!” when opened',
+  'Its scientists recently discovered the colour Thursday',
+  'The local currency is compliments and shiny buttons',
+  'There are no mosquitoes and this is its greatest achievement',
 ]
 const currentYear = new Date().getFullYear()
 
@@ -245,7 +245,7 @@ function App() {
   const sharePlanet = async () => {
     const data = {
       title: `I discovered Planet ${planet.name}`,
-      text: `${planet.name}: ${planet.answers[0].title}, ruled by ${planet.answers[2].title.toLowerCase()}. Chaos level: ${planet.chaos}% 🪐`,
+      text: `${planet.name}: ${planet.answers[0].title}, ruled by ${planet.answers[2].title.toLowerCase()} with chaos level ${planet.chaos}% 🪐`,
       url: window.location.href,
     }
     if (navigator.share) {
@@ -373,7 +373,6 @@ function App() {
   return (
     <div className={`app view-${view} ${chaosMode ? 'chaos-mode' : ''}`} ref={topRef}>
       <a className="skip-link" href="#main">Skip to the fun</a>
-      <FunCursor />
       <Header view={view} onHome={goHome} onPlay={start} menuOpen={menuOpen} setMenuOpen={setMenuOpen} sound={sound} setSound={setSound} chaosMode={chaosMode} onChaos={toggleChaos} />
       <main id="main">
         {view === 'home' && <HomePage onStart={start} onSurprise={surprise} chaosMode={chaosMode} onChaos={toggleChaos} />}
@@ -410,7 +409,7 @@ function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound, 
       <button className="logo" onClick={onHome} aria-label="KRSNA.FUN home">
         KRSNA<span>.</span>FUN <i>✦</i>
       </button>
-      <p className="header-whisper">{view === 'home' ? 'A little corner where weird things happen.' : 'Planet Department • Definitely Official'}</p>
+      <p className="header-whisper">{view === 'home' ? 'A little corner where weird things happen' : 'Planet Department • Definitely Official'}</p>
       <nav className={menuOpen ? 'open' : ''} aria-label="Main navigation">
         <button onClick={onHome}><Home size={16} /> Home</button>
         <button onClick={onHome}>Explore</button>
@@ -427,9 +426,9 @@ function Header({ view, onHome, onPlay, menuOpen, setMenuOpen, sound, setSound, 
 }
 
 function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
-  const [toyMessage, setToyMessage] = useState('psst... poke me')
+  const [toyMessage, setToyMessage] = useState('psst, poke me')
   const pokeToy = () => {
-    const messages = ['rude. do it again.', 'hehe that tickles', 'you found a secret!', 'okay bestie 💅', 'certified button-poker', 'the blob remembers.']
+    const messages = ['rude, do it again', 'hehe that tickles', 'you found a secret!', 'okay bestie 💅', 'certified button-poker', 'the blob remembers']
     setToyMessage(randomItem(messages))
     confetti({ particleCount: 28, spread: 55, origin: { x: .11, y: .63 }, colors: ['#ffd95a', '#7455e9', '#f16d75'] })
   }
@@ -441,8 +440,8 @@ function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
           <span className="doodle doodle-arrow">↝</span><span className="doodle doodle-orbit">🪐</span>
         </div>
         <div className="eyebrow"><span className="eyebrow-dot" /> THE INTERNET&apos;S PLAYGROUND <span className="eyebrow-new">NEW DROP</span></div>
-        <h1><span>BORED?</span><br />GOOD.</h1>
-        <p>Your screen time finally has a personality.<br className="desktop-break" /> Click something. Make something unhinged. Send it to the group chat.</p>
+        <h1><span>BORED?</span><br />GOOD</h1>
+        <p>Your screen time finally has a personality<br className="desktop-break" /> Click something, make something unhinged and send it to the group chat</p>
         <div className="hero-actions">
           <button className="primary-button wobble hero-main-cta" onClick={onSurprise}><Sparkles size={20} /> DROP ME SOMEWHERE WEIRD <span>↗</span></button>
           <button className="text-button" onClick={() => document.querySelector('#playground')?.scrollIntoView({ behavior: 'smooth' })}>See all the fun <ArrowRight size={18} /></button>
@@ -473,7 +472,7 @@ function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
             <span className="section-kicker">PICK YOUR CHAOS</span>
             <h2>THE PLAYGROUND <em>✦</em></h2>
           </div>
-          <p>No sign-ups. No instructions manual.<br />Just click something that looks fun.</p>
+          <p>No sign-ups or instruction manual<br />Just click something that looks fun</p>
         </div>
         <div className="activity-grid">
           {activities.map((activity, index) => (
@@ -504,9 +503,9 @@ function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
 
       <section className="vibe-section">
         <div className="vibe-heading">
-          <span className="section-kicker">LOW EFFORT. HIGH REWARD.</span>
-          <h2>FUN THAT <em>ACTUALLY</em><br />FUNS.</h2>
-          <p>We removed the boring bits. No accounts, no tutorials, no “book a demo.” Just instant nonsense.</p>
+          <span className="section-kicker">LOW EFFORT • HIGH REWARD</span>
+          <h2>FUN THAT <em>ACTUALLY</em><br />FUNS</h2>
+          <p>We removed the boring bits with no accounts, tutorials or “book a demo” nonsense</p>
         </div>
         <div className="vibe-grid">
           <article className="vibe-card combo-card">
@@ -514,34 +513,34 @@ function HomePage({ onStart, onSurprise, chaosMode, onChaos }) {
             <strong>32,768</strong>
             <h3>possible weird planets</h3>
             <div className="combo-orbit"><i /><i /><i /><b>?</b></div>
-            <p>And somehow you&apos;ll still make the strangest one.</p>
+            <p>And somehow you&apos;ll still make the strangest one</p>
           </article>
           <article className="vibe-card instant-card">
             <span>TIME TO FUN</span>
             <strong>0.2<small>SEC</small></strong>
             <h3>faster than your attention span</h3>
             <div className="speed-lines"><i /><i /><i /><i /></div>
-            <p>No onboarding. Your inner chaos gremlin already knows what to do.</p>
+            <p>No onboarding because your inner chaos gremlin already knows what to do</p>
           </article>
           <article className="vibe-card share-card">
             <span>GROUP CHAT ENERGY</span>
             <div className="chat-stack"><i>what is this 😭</i><i>mine has a potato king</i><i>send the link rn</i></div>
             <h3>made to be sent,<br />not scrolled past</h3>
-            <p>Every planet gets a shareable passport and its own permanent link.</p>
+            <p>Every planet gets a shareable passport and its own permanent link</p>
           </article>
         </div>
         <div className="how-it-works">
           <span>HOW TO KRSNA.FUN</span>
-          <div><b>01</b><i><MousePointer2 /></i><strong>Pick your chaos</strong><small>Five extremely important nonsense decisions.</small></div>
-          <div><b>02</b><i><Star /></i><strong>Discover a world</strong><small>Watch your choices become a living planet.</small></div>
-          <div><b>03</b><i><Shuffle /></i><strong>Explore & share</strong><small>Meet locals, cause disasters, confuse friends.</small></div>
+          <div><b>01</b><i><MousePointer2 /></i><strong>Pick your chaos</strong><small>Five extremely important nonsense decisions</small></div>
+          <div><b>02</b><i><Star /></i><strong>Discover a world</strong><small>Watch your choices become a living planet</small></div>
+          <div><b>03</b><i><Shuffle /></i><strong>Explore & share</strong><small>Roam freely, meet locals and understand your new world</small></div>
         </div>
       </section>
 
       <section className="manifesto" id="about">
         <span className="big-asterisk">✻</span>
-        <p>THE INTERNET NEEDED<br />MORE <em>FUN.</em></p>
-        <p className="manifesto-small">So we made this. No productivity. No doomscrolling.<br />Just tiny moments that make your day a little less ordinary.</p>
+        <p>THE INTERNET NEEDED<br />MORE <em>FUN</em></p>
+        <p className="manifesto-small">So we made this with no productivity and no doomscrolling<br />Just tiny moments that make your day a little less ordinary</p>
         <button className="primary-button dark-button" onClick={onStart}>Start with a planet <ArrowRight size={19} /></button>
       </section>
     </>
@@ -572,7 +571,7 @@ function PlanetBuilder({ step, choices, onChoose, onBack }) {
       <div className="question-heading" key={question.key}>
         <span>{question.kicker}</span>
         <h1>{question.title}</h1>
-        <p>Pick the answer your heart says yes to. Your brain isn&apos;t invited.</p>
+        <p>Pick the answer your heart says yes to because your brain isn&apos;t invited</p>
         <button className="random-answer" onClick={() => onChoose(randomItem(question.options))}><Shuffle /> Pick for me, I&apos;m chaotic</button>
       </div>
       <div className="answer-grid" key={`${question.key}-answers`}>
@@ -590,45 +589,16 @@ function PlanetBuilder({ step, choices, onChoose, onBack }) {
           </button>
         ))}
       </div>
-      <p className="builder-tip"><span>💡</span> There are no wrong answers. Only increasingly questionable planets.</p>
+      <p className="builder-tip"><span>💡</span> There are no wrong answers, only increasingly questionable planets</p>
     </section>
   )
-}
-
-function FunCursor() {
-  const dot = useRef(null)
-  const ring = useRef(null)
-
-  useEffect(() => {
-    const move = (event) => {
-      dot.current?.style.setProperty('transform', `translate3d(${event.clientX}px, ${event.clientY}px, 0)`)
-      ring.current?.animate(
-        { transform: `translate3d(${event.clientX}px, ${event.clientY}px, 0)` },
-        { duration: 280, fill: 'forwards', easing: 'cubic-bezier(.2,.8,.2,1)' },
-      )
-      const hovering = Boolean(event.target.closest('button, a, [role="button"]'))
-      ring.current?.classList.toggle('is-hovering', hovering)
-    }
-    const down = () => ring.current?.classList.add('is-clicking')
-    const up = () => ring.current?.classList.remove('is-clicking')
-    window.addEventListener('pointermove', move)
-    window.addEventListener('pointerdown', down)
-    window.addEventListener('pointerup', up)
-    return () => {
-      window.removeEventListener('pointermove', move)
-      window.removeEventListener('pointerdown', down)
-      window.removeEventListener('pointerup', up)
-    }
-  }, [])
-
-  return <div className="fun-cursor" aria-hidden="true"><i ref={dot} /><b ref={ring}>✦</b></div>
 }
 
 function Footer() {
   return (
     <footer>
       <div className="logo footer-logo">KRSNA<span>.</span>FUN <i>✦</i></div>
-      <p>Made for bored humans everywhere.</p>
+      <p>Made for bored humans everywhere</p>
       <span>© {currentYear} • STAY WEIRD</span>
     </footer>
   )

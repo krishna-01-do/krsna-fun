@@ -14,7 +14,7 @@ export const useGameStore = create((set) => ({
   quest: {
     id: 'missing-crown',
     title: 'The Crown Situation',
-    description: 'Find the alien king’s missing crown near Pizza Peak.',
+    description: 'Explore the strange landmarks across your new world',
     stage: 0,
   },
   discoveries: [],

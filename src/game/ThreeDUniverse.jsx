@@ -9,9 +9,9 @@ import { Bloom, EffectComposer, Noise, Vignette } from '@react-three/postprocess
 import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from 'three'
 import {
-  ArrowLeft, BookOpen, Check, Compass, Gamepad2, Map, Menu,
+  ArrowLeft, Check, Compass, Eye, Info, Map, Menu,
   Play, RotateCcw, Settings, Sparkles as SparklesIcon, Volume2,
-  VolumeX, X, Zap,
+  VolumeX, X,
 } from 'lucide-react'
 import { useGameStore } from './useGameStore'
 import './ThreeDUniverse.css'
@@ -32,18 +32,18 @@ const REGION_POSITIONS = [
 
 const dialogues = {
   ruler: [
-    'My crown is missing, but my confidence remains enormous.',
-    'I invented diplomacy. Everyone else is doing it wrong.',
-    'Please ignore the emergency dance rehearsal behind me.',
+    'My crown is enormous because my confidence is even bigger',
+    'I invented diplomacy and everyone else is doing it wrong',
+    'Please ignore the emergency dance rehearsal behind me',
   ],
   chef: [
-    'The secret ingredient is confidence. And twelve cheeses.',
+    'The secret ingredient is confidence and twelve cheeses',
     'If the sky rains lunch, is my restaurant technically outdoors?',
-    'One pizza for you. The bill goes to the moon.',
+    'One pizza for you and the bill goes to the moon',
   ],
   taxi: [
-    'My taxi flies perfectly. Landing is the experimental part.',
-    'Chocolate Valley? Sure. Sign this extremely tiny waiver.',
+    'My taxi flies perfectly but landing is the experimental part',
+    'Chocolate Valley? Sure, sign this extremely tiny waiver',
     'I only crashed twice today. Personal best!',
   ],
 }
@@ -112,7 +112,7 @@ function useAmbientSound(enabled) {
 export default function ThreeDUniverse({ planet, onAgain, onSurprise, onShare, onChange, copied }) {
   const [entered, setEntered] = useState(false)
   const [sound, setSound] = useState(true)
-  const [journalOpen, setJournalOpen] = useState(false)
+  const [guideOpen, setGuideOpen] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [webgl] = useState(() => {
     const canvas = document.createElement('canvas')
@@ -126,7 +126,8 @@ export default function ThreeDUniverse({ planet, onAgain, onSurprise, onShare, o
 
   useEffect(() => {
     resetGameUi()
-  }, [planet.seed, resetGameUi])
+    if (window.matchMedia('(max-width: 700px), (pointer: coarse)').matches) setQuality('low')
+  }, [planet.seed, resetGameUi, setQuality])
 
   if (!webgl) return <WebGLFallback onAgain={onAgain} />
 
@@ -158,11 +159,11 @@ export default function ThreeDUniverse({ planet, onAgain, onSurprise, onShare, o
         planet={planet}
         sound={sound}
         setSound={setSound}
-        onJournal={() => setJournalOpen(true)}
+        onGuide={() => setGuideOpen(true)}
         onMenu={() => setMenuOpen(true)}
       />
       <MobileControls />
-      {journalOpen && <QuestJournal planet={planet} onClose={() => setJournalOpen(false)} />}
+      {guideOpen && <WorldGuide planet={planet} onClose={() => setGuideOpen(false)} />}
       {menuOpen && (
         <PauseMenu
           quality={quality}
@@ -191,12 +192,12 @@ function GameArrival({ planet, palette, onEnter, onAgain }) {
       <div className="arrival-copy">
         <span><SparklesIcon /> WORLD GENERATED • SEED {planet.seed}</span>
         <h1>ENTER<br /><em>{planet.name}</em></h1>
-        <p>A real-time 3D world shaped by your five questionable decisions.</p>
-        <button onClick={onEnter}><Gamepad2 /> ENTER THE WORLD <b>↗</b></button>
+        <p>A living fantasy world shaped by your five questionable decisions</p>
+        <button onClick={onEnter}><Eye /> EXPLORE THE WORLD <b>↗</b></button>
         <button className="arrival-back" onClick={onAgain}><ArrowLeft /> Rebuild planet</button>
       </div>
       <div className="control-preview">
-        <span><kbd>WASD</kbd> MOVE</span><span><kbd>SPACE</kbd> JUMP</span><span><kbd>SHIFT</kbd> RUN</span><span><kbd>E</kbd> INTERACT</span>
+        <span><kbd>WASD</kbd> ROAM</span><span><kbd>DRAG</kbd> LOOK AROUND</span><span><kbd>E</kbd> DISCOVER</span>
       </div>
     </section>
   )
@@ -211,8 +212,8 @@ function GameScene({ planet, palette, quality }) {
     { id: 'taxi', label: 'Inspect the flying taxi', position: [12, 1, 5], type: 'npc', dialogue: 'taxi' },
     { id: 'river', label: 'Taste the strange river', position: [20, 1, -5], type: 'discovery' },
     { id: 'shrine', label: 'Activate the Pizza Shrine', position: [-18, 1, -13], type: 'discovery' },
-    { id: 'crown', label: 'Pick up the missing crown', position: [-28, 1, -22], type: 'quest' },
-    { id: 'stage', label: 'Start a city-wide dance', position: [7, 1, -7], type: 'event' },
+    { id: 'crown', label: 'Inspect the royal crown', position: [-28, 1, -22], type: 'discovery' },
+    { id: 'stage', label: 'Watch the city dance', position: [7, 1, -7], type: 'discovery' },
   ], [])
 
   return (
@@ -224,8 +225,8 @@ function GameScene({ planet, palette, quality }) {
       <Physics gravity={[0, -18, 0]} paused={paused} timeStep="vary">
         <WorldTerrain planet={planet} palette={palette} quality={quality} />
         <CapitalCity planet={planet} palette={palette} interactions={interactions} />
-        {quality === 'high' && <DetailedCapital palette={palette} />}
-        <Player planet={planet} interactions={interactions} />
+        <DetailedCapital palette={palette} />
+        <Player interactions={interactions} />
         <NpcPopulation planet={planet} event={event} />
         <Wildlife quality={quality} />
         <WorldEvent planet={planet} event={event} palette={palette} />
@@ -615,8 +616,6 @@ function FlyingTaxi({ position, palette }) {
 }
 
 function Crown({ position }) {
-  const quest = useGameStore((state) => state.quest)
-  if (quest.stage > 0) return null
   return (
     <Float speed={2} floatIntensity={.8}>
       <group position={[position[0], 1.4, position[2]]}>
@@ -681,7 +680,7 @@ function FantasyPlayerModel({ animation = 'Idle' }) {
   return <group ref={group} scale={.78} rotation={[0, Math.PI, 0]}><primitive object={clone} /></group>
 }
 
-function Player({ planet, interactions }) {
+function Player({ interactions }) {
   const body = useRef()
   const model = useRef()
   const keys = useRef({})
@@ -689,44 +688,46 @@ function Player({ planet, interactions }) {
   const pitch = useRef(.22)
   const dragging = useRef(false)
   const nearest = useRef(null)
-  const currentRegion = useRef('Ganache Bay')
+  const currentRegion = useRef(null)
   const [animation, setAnimation] = useState('Idle')
-  const { camera, gl } = useThree()
+  const { camera, gl, size } = useThree()
   const setPrompt = useGameStore((state) => state.setPrompt)
   const setLocation = useGameStore((state) => state.setLocation)
   const setDialogue = useGameStore((state) => state.setDialogue)
-  const setEvent = useGameStore((state) => state.setEvent)
-  const event = useGameStore((state) => state.event)
   const paused = useGameStore((state) => state.paused)
   const mobileMove = useGameStore((state) => state.mobileMove)
-  const mobileRun = useGameStore((state) => state.mobileRun)
-  const jumpQueued = useGameStore((state) => state.jumpQueued)
-  const consumeJump = useGameStore((state) => state.consumeJump)
   const interactQueued = useGameStore((state) => state.interactQueued)
   const consumeInteract = useGameStore((state) => state.consumeInteract)
-  const advanceQuest = useGameStore((state) => state.advanceQuest)
   const discover = useGameStore((state) => state.discover)
-  const quest = useGameStore((state) => state.quest)
+
+  useEffect(() => {
+    const mobile = size.width <= 700
+    // Three.js cameras are mutable scene objects and must be updated in place
+    // eslint-disable-next-line react/immutability
+    camera.fov = mobile ? 66 : 54
+    // eslint-disable-next-line react/immutability
+    camera.userData.distance = mobile ? 13 : 9
+    pitch.current = mobile ? .34 : .22
+    // eslint-disable-next-line react/immutability
+    camera.updateProjectionMatrix()
+  }, [camera, size.width])
 
   const activate = useCallback((item) => {
     if (!item) return
     if (item.type === 'npc') {
       const lines = dialogues[item.dialogue]
-      const extra = item.id === 'king' && quest.stage === 1 ? ' You found it! My head felt emotionally incomplete.' : ''
-      setDialogue({ speaker: item.id === 'king' ? 'KING ZORB' : item.id === 'chef' ? 'CHEF RIBBIT' : 'CAPTAIN WADDLES', text: lines[Math.floor(Math.random() * lines.length)] + extra })
-      if (item.id === 'king' && quest.stage === 1) advanceQuest(2, 'Crown returned! The king rewards you with one legally binding compliment.')
-    } else if (item.type === 'quest') {
-      advanceQuest(1, 'Return the sparkling crown to the alien king at the Royal Palace.')
-      setDialogue({ speaker: 'QUEST UPDATED', text: 'You found the crown. It is much heavier than responsible leadership.' })
-      discover('Pizza Peak crown cache')
-    } else if (item.type === 'event') {
-      setEvent(event ? null : { id: 'dance', startedAt: Date.now() })
-      setDialogue({ speaker: 'PUBLIC ANNOUNCEMENT', text: 'Mandatory emergency dancing has begun. Please wiggle responsibly.' })
+      setDialogue({ speaker: item.id === 'king' ? 'KING ZORB' : item.id === 'chef' ? 'CHEF RIBBIT' : 'CAPTAIN WADDLES', text: lines[Math.floor(Math.random() * lines.length)] })
     } else {
       discover(item.id)
-      setDialogue({ speaker: 'DISCOVERY', text: item.id === 'river' ? 'It tastes like chocolate, ambition, and a tiny bit of bridge.' : 'The shrine hums. Somewhere, a pizza delivery arrives early.' })
+      const discoveryText = {
+        river: 'The river flows with the flavour chosen for this world and glows after sunset',
+        shrine: 'The ancient shrine hums whenever food falls from the sky',
+        crown: 'The royal crown is kept on a mountain because nobody wants to carry it home',
+        stage: 'Every citizen learns the planet law on this glowing stage',
+      }
+      setDialogue({ speaker: 'WORLD DISCOVERY', text: discoveryText[item.id] ?? 'You found something the guidebook definitely forgot to mention' })
     }
-  }, [advanceQuest, discover, event, quest.stage, setDialogue, setEvent])
+  }, [discover, setDialogue])
 
   useEffect(() => {
     const down = (e) => {
@@ -741,7 +742,7 @@ function Player({ planet, interactions }) {
         pitch.current = THREE.MathUtils.clamp(pitch.current - e.movementY * .0022, .08, .78)
       }
     }
-    const wheel = (e) => { camera.userData.distance = THREE.MathUtils.clamp((camera.userData.distance ?? 7.5) + e.deltaY * .008, 5, 15) }
+    const wheel = (e) => { camera.userData.distance = THREE.MathUtils.clamp((camera.userData.distance ?? 9) + e.deltaY * .006, 7, 16) }
     const startDrag = () => { dragging.current = true }
     const stopDrag = () => { dragging.current = false }
     window.addEventListener('keydown', down)
@@ -768,41 +769,36 @@ function Player({ planet, interactions }) {
     const forwardInput = (keys.current.KeyW ? 1 : 0) - (keys.current.KeyS ? 1 : 0) - mobileMove.y
     const sideInput = (keys.current.KeyD ? 1 : 0) - (keys.current.KeyA ? 1 : 0) + mobileMove.x
     const moving = Math.abs(forwardInput) + Math.abs(sideInput) > .1
-    const running = keys.current.ShiftLeft || keys.current.ShiftRight || mobileRun
-    const speed = running ? 8.5 : 5
+    const speed = 5.2
     const forward = new THREE.Vector3(-Math.sin(yaw.current), 0, -Math.cos(yaw.current))
     const right = new THREE.Vector3(Math.cos(yaw.current), 0, -Math.sin(yaw.current))
     const direction = forward.multiplyScalar(forwardInput).add(right.multiplyScalar(sideInput)).normalize()
-    const gravityIndex = planet.indexes[1]
-    const gravityScale = gravityIndex === 0 ? .42 : gravityIndex === 3 ? .55 : gravityIndex === 4 ? .25 : 1
-    body.current.setGravityScale(event?.id === 'reverse' ? -.45 : gravityScale, true)
-    const sidewaysPull = gravityIndex === 1 ? 1.15 : 0
-    body.current.setLinvel({ x: direction.x * speed + sidewaysPull, y: velocity.y, z: direction.z * speed }, true)
-    const wantsJump = keys.current.Space || jumpQueued
-    if (wantsJump && Math.abs(velocity.y) < .18) {
-      body.current.setLinvel({ x: direction.x * speed, y: 7.4, z: direction.z * speed }, true)
-      setAnimation('Jump')
-      keys.current.Space = false
-      consumeJump()
-    } else if (moving) setAnimation(running ? 'Running' : 'Walking')
-    else setAnimation(event?.id === 'dance' ? 'Dance' : 'Idle')
+    body.current.setGravityScale(1, true)
+    const smoothing = 1 - Math.pow(.0008, delta)
+    body.current.setLinvel({
+      x: THREE.MathUtils.lerp(velocity.x, direction.x * speed, smoothing),
+      y: velocity.y,
+      z: THREE.MathUtils.lerp(velocity.z, direction.z * speed, smoothing),
+    }, true)
+    if (moving) setAnimation('Walking')
+    else setAnimation('Idle')
     if (model.current && moving) {
       const targetRotation = Math.atan2(direction.x, direction.z)
       model.current.rotation.y = THREE.MathUtils.lerp(model.current.rotation.y, targetRotation, 1 - Math.pow(.001, delta))
     }
-    const distance = camera.userData.distance ?? 7.5
+    const isMobile = size.width <= 700
+    const distance = camera.userData.distance ?? (isMobile ? 13 : 9)
     const target = new THREE.Vector3(position.x, position.y + 1.1, position.z)
     const cameraTarget = new THREE.Vector3(
       target.x + Math.sin(yaw.current) * Math.cos(pitch.current) * distance,
       target.y + Math.sin(pitch.current) * distance + 1.4,
       target.z + Math.cos(yaw.current) * Math.cos(pitch.current) * distance,
     )
-    camera.position.lerp(cameraTarget, 1 - Math.pow(.0004, delta))
+    camera.position.lerp(cameraTarget, 1 - Math.pow(.004, delta))
     camera.lookAt(target)
     let closest = null
     let closestDistance = 3.4
     for (const item of interactions) {
-      if (item.id === 'crown' && quest.stage > 0) continue
       const dist = Math.hypot(position.x - item.position[0], position.z - item.position[2])
       if (dist < closestDistance) { closest = item; closestDistance = dist }
     }
@@ -827,11 +823,11 @@ function Player({ planet, interactions }) {
       activate(nearest.current)
       consumeInteract()
     }
-    if (position.y < -12) body.current.setTranslation({ x: 0, y: 3, z: 24 }, true)
+    if (position.y < -12) body.current.setTranslation({ x: 0, y: 3, z: 14 }, true)
   })
 
   return (
-    <RigidBody ref={body} position={[0, 2.2, 24]} colliders={false} enabledRotations={[false,false,false]} linearDamping={4} friction={1} canSleep={false}>
+    <RigidBody ref={body} position={[0, 2.2, 14]} colliders={false} enabledRotations={[false,false,false]} linearDamping={4} friction={1} canSleep={false}>
       <CapsuleCollider args={[.75, .45]} position={[0, 1.1, 0]} />
       <group ref={model} position={[0, .35, 0]}>
         <FantasyPlayerModel animation={animation} />
@@ -945,34 +941,25 @@ function MeteorEvent({ palette }) {
   return <group>{!landed?<mesh ref={meteor} position={[25,28,-12]} castShadow><icosahedronGeometry args={[2.2,2]} /><meshStandardMaterial color="#d94f4e" emissive="#ff8b45" emissiveIntensity={1.5} /></mesh>:<group position={[-7,1.5,-12]}><pointLight color="#ff7749" intensity={12} distance={35} /><Sparkles count={220} scale={[14,8,14]} size={8} speed={3} color={palette.accent} /><mesh rotation={[-Math.PI/2,0,0]}><ringGeometry args={[2,6,32]} /><meshBasicMaterial color="#ff8c49" transparent opacity={.65} side={THREE.DoubleSide} /></mesh></group>}</group>
 }
 
-function GameHud({ planet, sound, setSound, onJournal, onMenu }) {
+function GameHud({ planet, sound, setSound, onGuide, onMenu }) {
   const location = useGameStore((state) => state.location)
   const prompt = useGameStore((state) => state.prompt)
   const dialogue = useGameStore((state) => state.dialogue)
   const setDialogue = useGameStore((state) => state.setDialogue)
-  const quest = useGameStore((state) => state.quest)
-  const setEvent = useGameStore((state) => state.setEvent)
-  const event = useGameStore((state) => state.event)
   const togglePause = useGameStore((state) => state.togglePause)
-  const triggerEvent = () => {
-    const events = ['meteor','dance','reverse']
-    const id = events[Math.floor(Math.random()*events.length)]
-    setEvent({ id, startedAt: Date.now() })
-    setTimeout(() => setEvent(null), 9000)
-  }
   return (
     <div className="game-hud">
       <div className="game-identity"><span>NOW EXPLORING</span><strong>{planet.name}</strong><small><Compass /> {location}</small></div>
       <div className="game-top-actions">
+        <button onClick={onGuide} aria-label="Open world guide"><Info/></button>
         <button onClick={() => setSound(!sound)} aria-label="Toggle sound">{sound?<Volume2/>:<VolumeX/>}</button>
-        <button onClick={()=>{togglePause();onMenu()}} aria-label="Pause game"><Menu/></button>
+        <button onClick={()=>{togglePause();onMenu()}} aria-label="Open menu"><Menu/></button>
       </div>
       <MiniMap />
-      <button className="weird-event-button" onClick={triggerEvent} disabled={Boolean(event)}><Zap fill="currentColor" /> {event?'WEIRDNESS IN PROGRESS':'SOMETHING WEIRD IS HAPPENING'}</button>
-      <button className="quest-chip" onClick={onJournal}><BookOpen/><span><small>ACTIVE QUEST</small>{quest.title}</span><b>{quest.stage}/2</b></button>
-      <div className="control-hint"><kbd>WASD</kbd> Move <kbd>SHIFT</kbd> Run <kbd>SPACE</kbd> Jump <kbd>E</kbd> Interact <span>Double-click to lock camera</span></div>
+      <button className="world-guide-button" onClick={onGuide}><Info/><span><small>YOUR WORLD</small>Explore the details</span></button>
+      <div className="control-hint"><kbd>WASD</kbd> Roam <kbd>DRAG</kbd> Look around <kbd>E</kbd> Discover <span>Scroll to zoom</span></div>
       {prompt && <div className="interaction-prompt"><kbd>E</kbd><span>{prompt.label}</span></div>}
-      {dialogue && <div className="game-dialogue"><span>{dialogue.speaker}</span><p>{dialogue.text}</p><button onClick={()=>setDialogue(null)}>CONTINUE <Check /></button></div>}
+      {dialogue && <div className="game-dialogue"><span>{dialogue.speaker}</span><p>{dialogue.text}</p><button onClick={()=>setDialogue(null)}>KEEP EXPLORING <Check /></button></div>}
     </div>
   )
 }
@@ -983,8 +970,6 @@ function MiniMap() {
 
 function MobileControls() {
   const setMobileMove = useGameStore((state)=>state.setMobileMove)
-  const setMobileRun = useGameStore((state)=>state.setMobileRun)
-  const queueJump = useGameStore((state)=>state.queueJump)
   const queueInteract = useGameStore((state)=>state.queueInteract)
   const knob = useRef()
   const active = useRef(false)
@@ -997,23 +982,22 @@ function MobileControls() {
     if(knob.current)knob.current.style.transform=`translate(${x*27}px,${y*27}px)`
   }
   const stop=()=>{active.current=false;setMobileMove({x:0,y:0});if(knob.current)knob.current.style.transform='translate(0,0)'}
-  return <div className="mobile-game-controls"><div className="virtual-joystick" onPointerDown={(e)=>{active.current=true;e.currentTarget.setPointerCapture(e.pointerId);move(e)}} onPointerMove={move} onPointerUp={stop} onPointerCancel={stop}><i ref={knob}/></div><div className="mobile-buttons"><button onPointerDown={()=>setMobileRun(true)} onPointerUp={()=>setMobileRun(false)}>RUN</button><button onClick={queueJump}>JUMP</button><button className="mobile-interact" onClick={queueInteract}>E</button></div></div>
+  return <div className="mobile-game-controls"><div className="virtual-joystick" onPointerDown={(e)=>{active.current=true;e.currentTarget.setPointerCapture(e.pointerId);move(e)}} onPointerMove={move} onPointerUp={stop} onPointerCancel={stop}><i ref={knob}/><span>ROAM</span></div><button className="mobile-interact" onClick={queueInteract}><Eye/>LOOK</button></div>
 }
 
-function QuestJournal({ planet, onClose }) {
-  const quest=useGameStore((state)=>state.quest)
+function WorldGuide({ planet, onClose }) {
   const discoveries=useGameStore((state)=>state.discoveries)
-  return <div className="game-modal-backdrop"><article className="quest-journal"><button className="game-modal-close" onClick={onClose}><X/></button><span>FIELD NOTES • PLANET {planet.name}</span><h2>QUEST & DISCOVERY<br/>JOURNAL</h2><section><small>ACTIVE MISSION</small><h3>{quest.title}</h3><p>{quest.description}</p><div className="quest-progress"><i className={quest.stage>=1?'done':''}>1</i><b/><i className={quest.stage>=2?'done':''}>2</i></div></section><section><small>DISCOVERED SECRETS</small>{discoveries.length?discoveries.map(item=><p key={item} className="discovery-row"><Check/> {item}</p>):<p className="empty-journal">The pages are suspiciously empty. Go touch strange things.</p>}</section></article></div>
+  return <div className="game-modal-backdrop"><article className="quest-journal world-guide"><button className="game-modal-close" onClick={onClose}><X/></button><span>VISITOR GUIDE • PLANET {planet.name}</span><h2>YOUR NEW<br/>WORLD</h2><div className="world-traits">{planet.answers.map((answer,index)=><section key={answer.title}><small>{['WEATHER','GRAVITY','RULER','LOCAL FOOD','SUPREME LAW'][index]}</small><h3>{answer.title}</h3><p>{answer.desc}</p></section>)}</div><section><small>PLACES YOU HAVE NOTICED</small>{discoveries.length?discoveries.map(item=><p key={item} className="discovery-row"><Check/> {item}</p>):<p className="empty-journal">Roam toward glowing landmarks and curious locals to learn their stories</p>}</section></article></div>
 }
 
 function PauseMenu({quality,setQuality,onClose,onAgain,onSurprise,onShare,onChange,copied}) {
   const setPaused=useGameStore((state)=>state.setPaused)
   const close=()=>{setPaused(false);onClose()}
-  return <div className="game-modal-backdrop"><article className="pause-menu"><span>GAME PAUSED • TAKE A TINY BREATH</span><h2>THE UNIVERSE<br/>CAN WAIT.</h2><button className="resume-game" onClick={close}><Play fill="currentColor"/> RESUME EXPLORING</button><div className="quality-setting"><Settings/><span><b>GRAPHICS QUALITY</b><small>Lower this if your device is sweating.</small></span><select value={quality} onChange={(e)=>setQuality(e.target.value)}><option value="high">Beautiful</option><option value="low">Potato-friendly</option></select></div><div className="pause-links"><button onClick={()=>onChange(0)}><RotateCcw/>Change planet</button><button onClick={onSurprise}><SparklesIcon/>New universe</button><button onClick={onShare}><Check/> {copied?'Link copied':'Share world'}</button><button onClick={onAgain}><ArrowLeft/>Exit to builder</button></div></article></div>
+  return <div className="game-modal-backdrop"><article className="pause-menu"><span>EXPLORATION PAUSED</span><h2>TAKE YOUR<br/>TIME</h2><button className="resume-game" onClick={close}><Play fill="currentColor"/> RESUME EXPLORING</button><div className="quality-setting"><Settings/><span><b>VISUAL QUALITY</b><small>Use Smooth on older phones</small></span><select value={quality} onChange={(e)=>setQuality(e.target.value)}><option value="high">Beautiful</option><option value="low">Smooth</option></select></div><div className="pause-links"><button onClick={()=>onChange(0)}><RotateCcw/>Change planet</button><button onClick={onSurprise}><SparklesIcon/>New universe</button><button onClick={onShare}><Check/> {copied?'Link copied':'Share world'}</button><button onClick={onAgain}><ArrowLeft/>Exit to builder</button></div></article></div>
 }
 
 function WebGLFallback({ onAgain }) {
-  return <div className="webgl-fallback"><span>3D ENGINE OFFLINE</span><h2>YOUR BROWSER<br/>LOST ITS GRAVITY.</h2><p>This world needs WebGL. Try enabling hardware acceleration or opening KRSNA.FUN in a modern browser.</p><button onClick={onAgain}><ArrowLeft/> Return to the planet lab</button></div>
+  return <div className="webgl-fallback"><span>3D WORLD OFFLINE</span><h2>YOUR BROWSER<br/>LOST ITS GRAVITY</h2><p>This world needs WebGL so try enabling hardware acceleration or opening KRSNA.FUN in a modern browser</p><button onClick={onAgain}><ArrowLeft/> Return to the planet lab</button></div>
 }
 
 useGLTF.preload(ROBOT)
