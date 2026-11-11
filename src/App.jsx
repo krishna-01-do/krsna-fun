@@ -1,11 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import {
   ArrowLeft, ArrowRight, Check, Globe2, Heart, Home, Menu,
   MousePointer2, Play, Shuffle, Sparkles, Star, Volume2, VolumeX, X, Zap,
 } from 'lucide-react'
 import confetti from 'canvas-confetti'
-import LivingUniverse from './LivingUniverse'
 import './App.css'
+
+const ThreeDUniverse = lazy(() => import('./game/ThreeDUniverse'))
 
 const questions = [
   {
@@ -385,15 +386,17 @@ function App() {
           />
         )}
         {view === 'reveal' && planet && (
-          <LivingUniverse
-            planet={planet}
-            onAgain={start}
-            onSurprise={surprise}
-            onShare={sharePlanet}
-            onDownload={downloadCard}
-            onChange={changeChoice}
-            copied={copied}
-          />
+          <Suspense fallback={<div className="engine-boot"><i /><span>STARTING 3D ENGINE</span></div>}>
+            <ThreeDUniverse
+              planet={planet}
+              onAgain={start}
+              onSurprise={surprise}
+              onShare={sharePlanet}
+              onDownload={downloadCard}
+              onChange={changeChoice}
+              copied={copied}
+            />
+          </Suspense>
         )}
       </main>
       {view === 'home' && <Footer />}

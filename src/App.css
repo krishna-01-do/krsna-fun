@@ -1,4 +1,6 @@
 .app { min-height: 100vh; background: var(--cream); overflow: hidden; }
+.engine-boot { min-height: calc(100svh - 74px); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 13px; color: #fff; background: #100b22; font-size: 9px; font-weight: 900; letter-spacing: .16em; }
+.engine-boot i { width: 42px; height: 42px; border: 3px solid rgba(255,255,255,.12); border-top-color: #ffce5b; border-radius: 50%; animation: spin .7s linear infinite; }
 .skip-link { position: fixed; z-index: 200; left: 16px; top: -60px; padding: 10px 16px; border-radius: 10px; background: #fff; transition: top .2s; }
 .skip-link:focus { top: 12px; }
 .fun-cursor { position: fixed; z-index: 9999; inset: 0; pointer-events: none; }

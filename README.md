@@ -1,6 +1,19 @@
 # KRSNA.FUN
 
-The internet's playground: an interactive React experience for building and exploring impossible living planets.
+The internet's playground: build an impossible planet, enter it and explore it as a real-time 3D game.
+
+## 3D game controls
+
+- `WASD` — move
+- `Shift` — run
+- `Space` — jump
+- `E` — interact
+- Mouse drag — rotate camera
+- Mouse wheel — zoom
+- Double-click the world — lock camera
+- `Escape` — release camera
+
+Touch devices receive an on-screen joystick and action buttons.
 
 ## Local development
 
@@ -23,6 +36,10 @@ Import this repository into Vercel. The included `vercel.json` configures the Vi
 - Build command: `npm run build`
 - Output directory: `dist`
 - Environment variables: none required
+
+## 3D asset licenses
+
+Bundled model provenance and licensing are documented in [`public/models/ATTRIBUTIONS.md`](public/models/ATTRIBUTIONS.md).
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
